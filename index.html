@@ -1,29 +1,177 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SLR Hub</title>
+    <title>SAP SHOP</title>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <h1>⚡ SLR Hub</h1>
+    <header class="header">
 
-<button id="themeButton">☀️</button>
+        <div class="logo">
+            SAP SHOP
+        </div>
 
-<p>همه ابزارهای کاربردی، رایگان و آنلاین</p>
+        <button id="themeButton">☀️</button>
 
-<input type="text" id="search" placeholder="🔎 جستجوی ابزار...">
+    </header>
 
-<button class="tool" data-name="ماشین حساب" id="calculatorButton">
-    🧮 ماشین حساب
-</button>
 
-<script src="js/script.js"></script>
+    <section class="hero">
+
+        <h1>SAP SHOP</h1>
+
+        <p>
+            بازار خرید و فروش آیتم‌های Minecraft
+        </p>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="جستجوی آیتم..."
+        >
+
+    </section>
+
+
+    <main class="shop">
+
+        <div class="shop-title">
+            <h2>آگهی‌ها</h2>
+
+            <button id="addButton" class="add-button">
+                +
+            </button>
+        </div>
+
+
+        <div id="products" class="products">
+
+            <div class="empty">
+                هنوز آگهی‌ای ثبت نشده است.
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- فرم ثبت آگهی -->
+
+    <div id="formOverlay" class="overlay">
+
+        <div class="form-box">
+
+            <button id="closeForm" class="close-button">
+                ×
+            </button>
+
+            <h2>ثبت آگهی</h2>
+
+            <form id="itemForm">
+
+                <label>
+                    عکس آیتم
+                    <span>(اختیاری)</span>
+                </label>
+
+                <input
+                    type="file"
+                    id="itemImage"
+                    accept="image/*"
+                >
+
+
+                <label>
+                    نام آیتم
+                    <span>*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="itemName"
+                    placeholder="مثلاً Diamond Sword"
+                    required
+                >
+
+
+                <label>
+                    توضیحات
+                    <span>*</span>
+                </label>
+
+                <textarea
+                    id="itemDescription"
+                    placeholder="توضیحات آیتم..."
+                    required
+                ></textarea>
+
+
+                <label>
+                    نوع ارزش
+                    <span>*</span>
+                </label>
+
+                <select id="valueType" required>
+
+                    <option value="">
+                        انتخاب کنید
+                    </option>
+
+                    <option value="Ruby">
+                        Ruby
+                    </option>
+
+                    <option value="Money">
+                        Money
+                    </option>
+
+                </select>
+
+
+                <label>
+                    قیمت
+                    <span>*</span>
+                </label>
+
+                <input
+                    type="number"
+                    id="itemPrice"
+                    min="1"
+                    placeholder="مثلاً 500"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                >
+                    ثبت آگهی
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+
+        SAP SHOP © 2026
+
+    </footer>
+
+
+    <script src="js/script.js"></script>
 
 </body>
+
 </html>
