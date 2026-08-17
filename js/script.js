@@ -17,11 +17,8 @@ const search = document.getElementById("search");
 
 themeButton.addEventListener("click", function () {
     document.body.classList.toggle("light-mode");
-
     themeButton.textContent =
-        document.body.classList.contains("light-mode")
-            ? "🌙"
-            : "☀️";
+        document.body.classList.contains("light-mode") ? "🌙" : "☀️";
 });
 
 addButton.addEventListener("click", function () {
@@ -39,14 +36,13 @@ formOverlay.addEventListener("click", function (event) {
 });
 
 async function loadListings() {
-
     const { data, error } = await supabaseClient
         .from("listings")
         .select("*")
         .order("created_at", { ascending: false });
 
     if (error) {
-        console.error("خطا در دریافت آگهی‌ها:", error);
+        console.error(error);
         return;
     }
 
@@ -62,25 +58,43 @@ async function loadListings() {
     }
 
     data.forEach(function (item) {
-
         const product = document.createElement("div");
-
         product.className = "product";
 
-        product.innerHTML = `
-            <h3>${item.نام_مورد || ""}</h3>
-            <p>${item.توضیحات || ""}</p>
-            <strong>${item.قیمت || 0} ${item.نوع_مقدار || ""}</strong>
-            ${
-                item.آدرس_تصویر
-                ? `<img src="${item.آدرس_تصویر}" alt="${item.نام_مورد || ""}">`
-                : ""
-            }
-            <button class="buy-button">
-                مشاهده آگهی
-            </button>
-        `;
+        const title = document.createElement("h3");
+        title.textContent = item.item_name || "";
 
+        const description = document.createElement("p");
+        description.textContent = item.description || "";
+
+        const price = document.createElement("strong");
+        price.textContent =
+            `${item.price || 0} ${item.value_type || ""}`;
+
+        const button = document.createElement("button");
+        button.className = "buy-button";
+        button.textContent = "مشاهده آگهی";
+
+        button.addEventListener("click", function () {
+            alert(
+                `نام: ${item.item_name}\n` +
+                `توضیحات: ${item.description}\n` +
+                `قیمت: ${item.price} ${item.value_type}`
+            );
+        });
+
+        product.appendChild(title);
+        product.appendChild(description);
+        product.appendChild(price);
+
+        if (item.image_url) {
+            const image = document.createElement("img");
+            image.src = item.image_url;
+            image.alt = item.item_name || "تصویر آگهی";
+            product.appendChild(image);
+        }
+
+        product.appendChild(button);
         products.appendChild(product);
     });
 }
@@ -88,7 +102,6 @@ async function loadListings() {
 
 // ثبت آگهی
 itemForm.addEventListener("submit", async function (event) {
-
     event.preventDefault();
 
     const itemName = document.getElementById("itemName").value.trim();
@@ -98,22 +111,22 @@ itemForm.addEventListener("submit", async function (event) {
     const itemImage = document.getElementById("itemImage").value.trim();
 
     if (!itemName || !itemDescription || !valueType || !itemPrice) {
-        alert("لطفاً همه قسمت‌های ضروری را پر کن.");
+        alert("لطفاً قسمت‌های ضروری را پر کن.");
         return;
     }
 
     const { error } = await supabaseClient
         .from("listings")
         .insert({
-            "نام_مورد": itemName,
-            "توضیحات": itemDescription,
-            "نوع_مقدار": valueType,
-            "قیمت": Number(itemPrice),
-            "آدرس_تصویر": itemImage || null
+            item_name: itemName,
+            description: itemDescription,
+            value_type: valueType,
+            price: Number(itemPrice),
+            image_url: itemImage || null
         });
 
     if (error) {
-        console.error("خطا در ثبت آگهی:", error);
+        console.error("Supabase error:", error);
         alert("ثبت آگهی انجام نشد: " + error.message);
         return;
     }
@@ -123,31 +136,22 @@ itemForm.addEventListener("submit", async function (event) {
     itemForm.reset();
     formOverlay.style.display = "none";
 
-    loadListings();
+    await loadListings();
 });
 
 
-// جستجوی آگهی
+// جستجو
 search.addEventListener("input", function () {
-
     const text = search.value.trim().toLowerCase();
 
-    const productsList = document.querySelectorAll(".product");
-
-    productsList.forEach(function (product) {
-
-        const name = product
-            .querySelector("h3")
-            .textContent
-            .toLowerCase();
+    document.querySelectorAll(".product").forEach(function (product) {
+        const name = product.querySelector("h3").textContent.toLowerCase();
 
         product.style.display =
-            name.includes(text)
-                ? ""
-                : "none";
+            name.includes(text) ? "" : "none";
     });
 });
 
 
-// بارگذاری اولیه
+// بارگذاری آگهی‌ها
 loadListings();
