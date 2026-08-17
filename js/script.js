@@ -1,39 +1,47 @@
+const SUPABASE_URL = "https://kgjiviwwwrwzpmektoh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_inLD9v_USGu93C3-JwZ7CA_mLnNBFUw";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
 const themeButton = document.getElementById("themeButton");
-
-themeButton.addEventListener("click", function () {
-
-    document.body.classList.toggle("light-mode");
-
-    if (document.body.classList.contains("light-mode")) {
-        themeButton.textContent = "🌙";
-    } else {
-        themeButton.textContent = "☀️";
-    }
-
-});
-
-
 const addButton = document.getElementById("addButton");
+const viewButton = document.getElementById("viewButton");
 const formOverlay = document.getElementById("formOverlay");
 const closeForm = document.getElementById("closeForm");
 const itemForm = document.getElementById("itemForm");
 const products = document.getElementById("products");
+const search = document.getElementById("search");
 
 
+// حالت روشن / تاریک
+themeButton.addEventListener("click", function () {
+
+    document.body.classList.toggle("light-mode");
+
+    themeButton.textContent =
+        document.body.classList.contains("light-mode")
+            ? "🌙"
+            : "☀️";
+
+});
+
+
+// باز کردن فرم ثبت آگهی
 addButton.addEventListener("click", function () {
-
     formOverlay.style.display = "flex";
-
 });
 
 
+// بستن فرم
 closeForm.addEventListener("click", function () {
-
     formOverlay.style.display = "none";
-
 });
 
 
+// بستن با کلیک بیرون
 formOverlay.addEventListener("click", function (event) {
 
     if (event.target === formOverlay) {
@@ -43,83 +51,53 @@ formOverlay.addEventListener("click", function (event) {
 });
 
 
-itemForm.addEventListener("submit", function (event) {
+// نمایش آگهی‌ها
+async function loadListings() {
 
-    event.preventDefault();
+    const { data, error } = await supabaseClient
+        .from("listings")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-    const name = document.getElementById("itemName").value;
-    const description = document.getElementById("itemDescription").value;
-    const valueType = document.getElementById("valueType").value;
-    const price = document.getElementById("itemPrice").value;
-
-    const empty = document.querySelector(".empty");
-
-    if (empty) {
-        empty.remove();
+    if (error) {
+        console.error(error);
+        return;
     }
 
+    products.innerHTML = "";
 
-    const product = document.createElement("div");
+    if (!data || data.length === 0) {
 
-    product.className = "product";
+        products.innerHTML = `
+            <div class="empty">
+                هنوز آگهی‌ای ثبت نشده است.
+            </div>
+        `;
 
-    product.setAttribute("data-name", name);
+        return;
+    }
 
+    data.forEach(function (item) {
 
-    product.innerHTML = `
-        <div class="product-icon">
-            ⛏️
-        </div>
+        const product = document.createElement("div");
 
-        <h2>${name}</h2>
+        product.className = "product";
+        product.setAttribute("data-name", item.item_name);
 
-        <p>${description}</p>
+        product.innerHTML = `
+            <h3>${item.item_name}</h3>
+            <p>${item.description}</p>
+            <strong>${item.price} ${item.value_type}</strong>
+            <button class="buy-button">
+                مشاهده آگهی
+            </button>
+        `;
 
-        <strong>
-            ${price} ${valueType}
-        </strong>
-
-        <button class="buy-button">
-            مشاهده آگهی
-        </button>
-    `;
-
-
-    products.appendChild(product);
-
-    itemForm.reset();
-
-    formOverlay.style.display = "none";
-
-});
-
-
-const search = document.getElementById("search");
-
-
-search.addEventListener("input", function () {
-
-    const text = search.value.toLowerCase();
-
-    const items = document.querySelectorAll(".product");
-
-
-    items.forEach(function (item) {
-
-        const name = item
-            .getAttribute("data-name")
-            .toLowerCase();
-
-        if (name.includes(text)) {
-
-            item.style.display = "block";
-
-        } else {
-
-            item.style.display = "none";
-
-        }
+        products.appendChild(product);
 
     });
 
-});
+}
+
+
+// ثبت آگهی

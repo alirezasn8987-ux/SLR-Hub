@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SAP SHOP</title>
+    <title>SPH SHOP</title>
 
     <link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body>
@@ -15,7 +17,7 @@
     <header class="header">
 
         <div class="logo">
-            SAP SHOP
+            SPH SHOP
         </div>
 
         <button id="themeButton">☀️</button>
@@ -25,7 +27,7 @@
 
     <section class="hero">
 
-        <h1>SAP SHOP</h1>
+        <h1>SPH SHOP</h1>
 
         <p>
             بازار خرید و فروش آیتم‌های Minecraft
@@ -42,14 +44,9 @@
 
     <main class="shop">
 
-        <div class="shop-title">
-            <h2>آگهی‌ها</h2>
-
-            <button id="addButton" class="add-button">
-                +
-            </button>
-        </div>
-
+        <h2 class="section-title">
+            آگهی‌ها
+        </h2>
 
         <div id="products" class="products">
 
@@ -59,10 +56,21 @@
 
         </div>
 
+
+        <div class="shop-actions">
+
+            <button id="addButton" class="main-button">
+                + ثبت آگهی
+            </button>
+
+            <button id="viewButton" class="second-button">
+                مشاهده آگهی‌ها
+            </button>
+
+        </div>
+
     </main>
 
-
-    <!-- فرم ثبت آگهی -->
 
     <div id="formOverlay" class="overlay">
 
@@ -72,7 +80,9 @@
                 ×
             </button>
 
-            <h2>ثبت آگهی</h2>
+            <h2>
+                ثبت آگهی
+            </h2>
 
             <form id="itemForm">
 
@@ -96,7 +106,7 @@
                 <input
                     type="text"
                     id="itemName"
-                    placeholder="مثلاً Diamond Sword"
+                    placeholder="نام آیتم"
                     required
                 >
 
@@ -108,7 +118,7 @@
 
                 <textarea
                     id="itemDescription"
-                    placeholder="توضیحات آیتم..."
+                    placeholder="توضیحات آیتم"
                     required
                 ></textarea>
 
@@ -165,7 +175,7 @@
 
     <footer>
 
-        SAP SHOP © 2026
+        SPH SHOP © 2026
 
     </footer>
 
