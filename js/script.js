@@ -1,4 +1,4 @@
-const SUPABASE_URL = "https://kgjiviwwwrwzpmektoh.supabase.co";
+const SUPABASE_URL = "https://kgjiviwwwrkwzpmektoh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_inLD9v_USGu93C3-JwZ7CA_mLnNBFUw";
 
 const supabaseClient = window.supabase.createClient(
@@ -15,40 +15,53 @@ const itemForm = document.getElementById("itemForm");
 const products = document.getElementById("products");
 const search = document.getElementById("search");
 
+
+// حالت روشن / تاریک
 themeButton.addEventListener("click", function () {
     document.body.classList.toggle("light-mode");
+
     themeButton.textContent =
-        document.body.classList.contains("light-mode") ? "🌙" : "☀️";
+        document.body.classList.contains("light-mode")
+            ? "🌙"
+            : "☀️";
 });
 
+
+// باز کردن فرم ثبت آگهی
 addButton.addEventListener("click", function () {
     formOverlay.style.display = "flex";
 });
 
+
+// بستن فرم
 closeForm.addEventListener("click", function () {
     formOverlay.style.display = "none";
 });
 
+
+// بستن با کلیک بیرون
 formOverlay.addEventListener("click", function (event) {
     if (event.target === formOverlay) {
         formOverlay.style.display = "none";
     }
 });
 
+
+// نمایش آگهی‌ها
 async function loadListings() {
-    const { data, error } = await supabaseClient
+    const result = await supabaseClient
         .from("listings")
         .select("*")
         .order("created_at", { ascending: false });
 
-    if (error) {
-        console.error(error);
+    if (result.error) {
+        console.error(result.error);
         return;
     }
 
     products.innerHTML = "";
 
-    if (!data || data.length === 0) {
+    if (!result.data || result.data.length === 0) {
         products.innerHTML = `
             <div class="empty">
                 هنوز آگهی‌ای ثبت نشده است.
@@ -57,7 +70,7 @@ async function loadListings() {
         return;
     }
 
-    data.forEach(function (item) {
+    result.data.forEach(function (item) {
         const product = document.createElement("div");
         product.className = "product";
 
@@ -69,7 +82,7 @@ async function loadListings() {
 
         const price = document.createElement("strong");
         price.textContent =
-            `${item.price || 0} ${item.value_type || ""}`;
+            (item.price || 0) + " " + (item.value_type || "");
 
         const button = document.createElement("button");
         button.className = "buy-button";
@@ -77,24 +90,18 @@ async function loadListings() {
 
         button.addEventListener("click", function () {
             alert(
-                `نام: ${item.item_name}\n` +
-                `توضیحات: ${item.description}\n` +
-                `قیمت: ${item.price} ${item.value_type}`
+                "نام: " + (item.item_name || "") +
+                "\nتوضیحات: " + (item.description || "") +
+                "\nقیمت: " + (item.price || 0) +
+                " " + (item.value_type || "")
             );
         });
 
         product.appendChild(title);
         product.appendChild(description);
         product.appendChild(price);
-
-        if (item.image_url) {
-            const image = document.createElement("img");
-            image.src = item.image_url;
-            image.alt = item.item_name || "تصویر آگهی";
-            product.appendChild(image);
-        }
-
         product.appendChild(button);
+
         products.appendChild(product);
     });
 }
@@ -104,18 +111,27 @@ async function loadListings() {
 itemForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const itemName = document.getElementById("itemName").value.trim();
-    const itemDescription = document.getElementById("itemDescription").value.trim();
-    const valueType = document.getElementById("valueType").value;
-    const itemPrice = document.getElementById("itemPrice").value;
-    const itemImage = document.getElementById("itemImage").value.trim();
+    const itemName =
+        document.getElementById("itemName").value.trim();
+
+    const itemDescription =
+        document.getElementById("itemDescription").value.trim();
+
+    const valueType =
+        document.getElementById("valueType").value;
+
+    const itemPrice =
+        document.getElementById("itemPrice").value;
+
+    const itemImage =
+        document.getElementById("itemImage").value.trim();
 
     if (!itemName || !itemDescription || !valueType || !itemPrice) {
         alert("لطفاً قسمت‌های ضروری را پر کن.");
         return;
     }
 
-    const { error } = await supabaseClient
+    const result = await supabaseClient
         .from("listings")
         .insert({
             item_name: itemName,
@@ -125,9 +141,14 @@ itemForm.addEventListener("submit", async function (event) {
             image_url: itemImage || null
         });
 
-    if (error) {
-        console.error("Supabase error:", error);
-        alert("ثبت آگهی انجام نشد: " + error.message);
+    if (result.error) {
+        console.error("Supabase error:", result.error);
+
+        alert(
+            "ثبت آگهی انجام نشد:\n" +
+            result.error.message
+        );
+
         return;
     }
 
@@ -136,22 +157,6 @@ itemForm.addEventListener("submit", async function (event) {
     itemForm.reset();
     formOverlay.style.display = "none";
 
-    await loadListings();
-});
 
-
-// جستجو
-search.addEventListener("input", function () {
-    const text = search.value.trim().toLowerCase();
-
-    document.querySelectorAll(".product").forEach(function (product) {
-        const name = product.querySelector("h3").textContent.toLowerCase();
-
-        product.style.display =
-            name.includes(text) ? "" : "none";
-    });
-});
-
-
-// بارگذاری آگهی‌ها
 loadListings();
+});
