@@ -11,6 +11,35 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
+#authOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+#authOverlay .form-box {
+    width: 90%;
+    max-width: 400px;
+    padding: 25px;
+    border-radius: 18px;
+    background: #1f2937;
+    color: white;
+}
+
+#authOverlay input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    margin: 7px 0;
+    border-radius: 10px;
+    border: none;
+}
+
 #menuButton {
     font-size: 28px;
     background: none;
@@ -220,7 +249,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="js/script.js"></script>
 
 
 <script>
