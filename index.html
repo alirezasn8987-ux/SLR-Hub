@@ -10,6 +10,38 @@
     <link rel="stylesheet" href="css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
+#menuButton {
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+}
+
+#menuBox {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background: #1f2937;
+    padding: 10px;
+    border-radius: 12px;
+    z-index: 1000;
+}
+
+#menuBox button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+</style>
+
 </head>
 
 <body>
@@ -21,6 +53,13 @@
         </div>
 
         <button id="themeButton">☀️</button>
+
+        <button id="menuButton">⋮</button>
+
+<div id="menuBox">
+    <button id="loginMenu">ثبت‌نام / ورود</button>
+    <button id="logoutMenu">خروج از حساب کاربری</button>
+</div>
 
     </header>
 
@@ -183,86 +222,16 @@
 
     <script src="js/script.js"></script>
 
-<div id="authBox">
-    <h2>ثبت‌نام / ورود</h2>
-
-    <input id="authEmail" type="email" placeholder="ایمیل">
-
-    <input id="authPassword" type="password" placeholder="رمز عبور">
-
-    <button id="signupBtn">ثبت‌نام</button>
-    <button id="loginBtn">ورود</button>
-
-    <p id="authMessage"></p>
-</div>
-
-<style>
-#authBox {
-    max-width: 400px;
-    margin: 30px auto;
-    padding: 20px;
-    border-radius: 18px;
-    background: #1f2937;
-    color: white;
-    text-align: center;
-}
-
-#authBox input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px;
-    margin: 7px 0;
-    border-radius: 10px;
-    border: none;
-}
-
-#authBox button {
-    padding: 12px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-</style>
 
 <script>
-const SUPABASE_URL = "https://kgjiviwwwrkwzpmektoh.supabase.co";
-const SUPABASE_KEY = "sb_publishable_inLD9v_USGu93C3-JwZ7CA_mLnNBFUw";
+document.getElementById("menuButton").addEventListener("click", function () {
+    const menu = document.getElementById("menuBox");
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
-document.getElementById("signupBtn").addEventListener("click", async function () {
-
-    const email = document.getElementById("authEmail").value.trim();
-    const password = document.getElementById("authPassword").value;
-    const message = document.getElementById("authMessage");
-
-    if (!email || !password) {
-        message.textContent = "ایمیل و رمز عبور را وارد کن.";
-        return;
+    if (menu.style.display === "block") {
+        menu.style.display = "none";
+    } else {
+        menu.style.display = "block";
     }
-
-    message.textContent = "در حال ثبت‌نام...";
-
-    const { error } = await supabaseClient.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-            emailRedirectTo:
-                "https://alirezasn8987-ux.github.io/SLR-Hub/"
-        }
-    });
-
-    if (error) {
-        message.textContent = "خطا: " + error.message;
-        return;
-    }
-
-    message.textContent =
-        "ثبت‌نام شد! 📧 ایمیلت رو بررسی کن و تأییدش کن.";
 });
 </script>
 
