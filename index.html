@@ -235,6 +235,41 @@ document.getElementById("menuButton").addEventListener("click", function () {
 });
 </script>
 
+<div id="authOverlay" class="overlay">
+    <div class="form-box">
+        <button id="closeAuth" class="close-button">×</button>
+
+        <h2>ثبت‌نام / ورود</h2>
+
+        <input id="authEmail" type="email" placeholder="ایمیل">
+
+        <input id="authPassword" type="password" placeholder="رمز عبور">
+
+        <input id="gameUsername" type="text" placeholder="نام داخل بازی Minecraft">
+
+        <button id="signupBtn" class="submit-button">
+            ثبت‌نام
+        </button>
+
+        <button id="loginBtn" class="second-button">
+            ورود
+        </button>
+
+        <p id="authMessage"></p>
+    </div>
+</div>
+
+<script>
+document.getElementById("loginMenu").addEventListener("click", function () {
+    document.getElementById("authOverlay").style.display = "flex";
+    document.getElementById("menuBox").style.display = "none";
+});
+
+document.getElementById("closeAuth").addEventListener("click", function () {
+    document.getElementById("authOverlay").style.display = "none";
+});
+</script>
+
 </body>
 
 </html>
