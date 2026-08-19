@@ -7,7 +7,7 @@ const supabaseClient = window.supabase.createClient(
 );
 
 const themeButton = document.getElementById("themeButton");
-const addButton = document.getElementById("addButton");
+const addAdButton = document.getElementById("addAdButton");
 const formOverlay = document.getElementById("formOverlay");
 const closeForm = document.getElementById("closeForm");
 const itemForm = document.getElementById("itemForm");
@@ -24,8 +24,8 @@ if (themeButton) {
     });
 }
 
-if (addButton) {
-    addButton.addEventListener("click", function () {
+if (addAdButton) {
+    addAdButton.addEventListener("click", function () {
         formOverlay.style.display = "flex";
     });
 }
