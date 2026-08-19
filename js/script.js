@@ -205,3 +205,5 @@ if (messagesOverlay) {
         }
     });
 }
+
+alert("MESSAGES SCRIPT OK");
