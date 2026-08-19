@@ -5,7 +5,6 @@ const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
-alert("SCRIPT START");
 const themeButton = document.getElementById("themeButton");
 const addAdButton = document.getElementById("addAdButton");
 const formOverlay = document.getElementById("formOverlay");
@@ -205,5 +204,3 @@ if (messagesOverlay) {
         }
     });
 }
-
-alert("MESSAGES SCRIPT OK");
