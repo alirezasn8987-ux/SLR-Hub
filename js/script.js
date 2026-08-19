@@ -204,3 +204,146 @@ if (messagesOverlay) {
         }
     });
 }
+
+// ================================
+// SLR-Hub Authentication
+// ================================
+
+const authOverlay = document.getElementById("authOverlay");
+const closeAuth = document.getElementById("closeAuth");
+
+const authEmail = document.getElementById("authEmail");
+const authPassword = document.getElementById("authPassword");
+const gameUsername = document.getElementById("gameUsername");
+
+const signupBtn = document.getElementById("signupBtn");
+const loginBtn = document.getElementById("loginBtn");
+const authMessage = document.getElementById("authMessage");
+
+async function createProfile(user) {
+    if (!user) return;
+
+    const minecraftUsername =
+        gameUsername ? gameUsername.value.trim() : "";
+
+    if (!minecraftUsername) {
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("profiles")
+        .upsert({
+            id: user.id,
+            minecraft_username: minecraftUsername
+        });
+
+    if (error) {
+        console.error("Profile error:", error);
+    }
+}
+
+if (signupBtn) {
+    signupBtn.addEventListener("click", async function () {
+
+        const email = authEmail.value.trim();
+        const password = authPassword.value;
+        const minecraftUsername = gameUsername.value.trim();
+
+        if (!email || !password || !minecraftUsername) {
+            authMessage.textContent =
+                "لطفاً ایمیل، رمز عبور و نام Minecraft را وارد کنید.";
+            return;
+        }
+
+        authMessage.textContent = "در حال ثبت‌نام...";
+
+        const { data, error } =
+            await supabaseClient.auth.signUp({
+                email: email,
+                password: password
+            });
+
+        if (error) {
+            console.error(error);
+            authMessage.textContent =
+                "ثبت‌نام انجام نشد: " + error.message;
+            return;
+        }
+
+        if (data.user) {
+            const { error: profileError } =
+                await supabaseClient
+                    .from("profiles")
+                    .insert({
+                        id: data.user.id,
+                        minecraft_username: minecraftUsername
+                    });
+
+            if (profileError) {
+                console.error(profileError);
+                authMessage.textContent =
+                    "حساب ساخته شد، اما ذخیره نام Minecraft انجام نشد.";
+                return;
+            }
+        }
+
+        authMessage.textContent =
+            "ثبت‌نام با موفقیت انجام شد! 🎉";
+
+        setTimeout(function () {
+            authOverlay.style.display = "none";
+        }, 1200);
+    });
+}
+
+if (loginBtn) {
+    loginBtn.addEventListener("click", async function () {
+
+        const email = authEmail.value.trim();
+        const password = authPassword.value;
+
+        if (!email || !password) {
+            authMessage.textContent =
+                "ایمیل و رمز عبور را وارد کنید.";
+            return;
+        }
+
+        authMessage.textContent = "در حال ورود...";
+
+        const { data, error } =
+            await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+        if (error) {
+            console.error(error);
+            authMessage.textContent =
+                "ورود انجام نشد: " + error.message;
+            return;
+        }
+
+        authMessage.textContent =
+            "با موفقیت وارد شدید! 👋";
+
+        setTimeout(function () {
+            authOverlay.style.display = "none";
+        }, 1000);
+    });
+}
+
+if (closeAuth) {
+    closeAuth.addEventListener("click", function () {
+        authOverlay.style.display = "none";
+    });
+}
+
+supabaseClient.auth.onAuthStateChange(
+    async function (event, session) {
+
+        if (session && session.user) {
+            console.log("User logged in:", session.user.id);
+        }
+
+    }
+);
