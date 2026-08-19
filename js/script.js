@@ -181,3 +181,27 @@ if (search) {
 window.addEventListener("load", async function () {
     loadListings();
 });
+
+const messagesButton = document.getElementById("messagesButton");
+const messagesOverlay = document.getElementById("messagesOverlay");
+const closeMessages = document.getElementById("closeMessages");
+
+if (messagesButton && messagesOverlay) {
+    messagesButton.addEventListener("click", function () {
+        messagesOverlay.style.display = "flex";
+    });
+}
+
+if (closeMessages && messagesOverlay) {
+    closeMessages.addEventListener("click", function () {
+        messagesOverlay.style.display = "none";
+    });
+}
+
+if (messagesOverlay) {
+    messagesOverlay.addEventListener("click", function (event) {
+        if (event.target === messagesOverlay) {
+            messagesOverlay.style.display = "none";
+        }
+    });
+}
