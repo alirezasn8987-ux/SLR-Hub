@@ -284,6 +284,34 @@ body.light-mode .second-button {
         margin-top: 35px;
     }
 
-}*
-{
+}
 
+#bottomBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+    background: rgba(20, 20, 20, 0.95);
+    z-index: 9999;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#bottomBar button {
+    width: 52px;
+    height: 52px;
+    border: none;
+    border-radius: 50%;
+    font-size: 25px;
+    cursor: pointer;
+    background: #374151;
+    color: white;
+}
+
+#addAdButton {
+    font-size: 32px !important;
+}
