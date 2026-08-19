@@ -255,44 +255,61 @@ if (signupBtn) {
             return;
         }
 
+        if (password.length < 6) {
+            authMessage.textContent =
+                "رمز عبور باید حداقل ۶ کاراکتر باشد.";
+            return;
+        }
+
         authMessage.textContent = "در حال ثبت‌نام...";
 
         const { data, error } =
             await supabaseClient.auth.signUp({
                 email: email,
-                password: password
+                password: password,
+                options: {
+                    data: {
+                        minecraft_username: minecraftUsername
+                    }
+                }
             });
 
         if (error) {
-            console.error(error);
+            console.error("Signup error:", error);
             authMessage.textContent =
                 "ثبت‌نام انجام نشد: " + error.message;
             return;
         }
 
-        if (data.user) {
+        if (data.session && data.user) {
+
             const { error: profileError } =
                 await supabaseClient
                     .from("profiles")
-                    .insert({
+                    .upsert({
                         id: data.user.id,
                         minecraft_username: minecraftUsername
                     });
 
             if (profileError) {
-                console.error(profileError);
+                console.error("Profile error:", profileError);
                 authMessage.textContent =
                     "حساب ساخته شد، اما ذخیره نام Minecraft انجام نشد.";
                 return;
             }
-        }
 
-        authMessage.textContent =
-            "ثبت‌نام با موفقیت انجام شد! 🎉";
+            authMessage.textContent =
+                "ثبت‌نام با موفقیت انجام شد! 🎉";
+
+        } else {
+
+            authMessage.textContent =
+                "حساب ساخته شد! ایمیل خود را تأیید کنید، سپس وارد شوید. 📧";
+        }
 
         setTimeout(function () {
             authOverlay.style.display = "none";
-        }, 1200);
+        }, 1800);
     });
 }
 
@@ -317,10 +334,34 @@ if (loginBtn) {
             });
 
         if (error) {
-            console.error(error);
+            console.error("Login error:", error);
             authMessage.textContent =
                 "ورود انجام نشد: " + error.message;
             return;
+        }
+
+        if (data.user) {
+
+            const minecraftUsername =
+                data.user.user_metadata?.minecraft_username || "";
+
+            if (minecraftUsername) {
+
+                const { error: profileError } =
+                    await supabaseClient
+                        .from("profiles")
+                        .upsert({
+                            id: data.user.id,
+                            minecraft_username: minecraftUsername
+                        });
+
+                if (profileError) {
+                    console.error(
+                        "Profile update error:",
+                        profileError
+                    );
+                }
+            }
         }
 
         authMessage.textContent =
