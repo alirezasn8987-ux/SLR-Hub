@@ -40,34 +40,6 @@
     border: none;
 }
 
-#menuButton {
-    font-size: 28px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: inherit;
-}
-
-#menuBox {
-    display: none;
-    position: absolute;
-    top: 60px;
-    right: 10px;
-    background: #1f2937;
-    padding: 10px;
-    border-radius: 12px;
-    z-index: 1000;
-}
-
-#menuBox button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
 
 </style>
 
@@ -82,15 +54,7 @@
         </div>
 
         <button id="themeButton">☀️</button>
-
-        <button id="menuButton">⋮</button>
-
-<div id="menuBox">
-    <button id="loginMenu">ثبت‌نام / ورود</button>
-    <button id="logoutMenu">خروج از حساب کاربری</button>
-</div>
-
-    </header>
+</header>
 
 
     <section class="hero">
@@ -235,58 +199,6 @@
         SPH SHOP © 2026
 
     </footer>
-
-
-
-
-<script>
-document.getElementById("menuButton").addEventListener("click", function () {
-    const menu = document.getElementById("menuBox");
-
-    if (menu.style.display === "block") {
-        menu.style.display = "none";
-    } else {
-        menu.style.display = "block";
-    }
-});
-</script>
-
-<div id="authOverlay" class="overlay">
-    <div class="form-box">
-        <button id="closeAuth" class="close-button">×</button>
-
-        <h2>ثبت‌نام / ورود</h2>
-
-        <input id="authEmail" type="email" placeholder="ایمیل">
-
-        <input id="authPassword" type="password" placeholder="رمز عبور">
-
-        <input id="gameUsername" type="text" placeholder="نام داخل بازی Minecraft">
-
-        <button id="signupBtn" class="submit-button">
-            ثبت‌نام
-        </button>
-
-        <button id="loginBtn" class="second-button">
-            ورود
-        </button>
-
-        <p id="authMessage"></p>
-    </div>
-</div>
-
-<script>
-document.getElementById("loginMenu").addEventListener("click", function () {
-    document.getElementById("authOverlay").style.display = "flex";
-    document.getElementById("menuBox").style.display = "none";
-});
-
-document.getElementById("closeAuth").addEventListener("click", function () {
-    document.getElementById("authOverlay").style.display = "none";
-});
-</script>
-
-
 <div id="bottomBar">
 
     <button id="messagesButton" title="پیام‌ها">
