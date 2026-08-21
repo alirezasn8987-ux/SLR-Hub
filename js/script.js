@@ -926,7 +926,7 @@ async function checkUnreadMessages() {
             await supabaseClient
                 .from("messages")
                 .select("id,is_read,receiver_visitor_id")
-                .eq("receiver_visitor_id", currentVisitorId)
+                .eq("receiver_id", currentVisitorId)
                 .eq("is_read", false)
                 .limit(1);
 
