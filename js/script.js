@@ -1109,7 +1109,7 @@ checkUnreadMessages();
 
 setInterval(
     checkUnreadMessages,
-    5000
+    1000
 );
 
 console.log("🔥 DEBUG TEST شروع شد");
