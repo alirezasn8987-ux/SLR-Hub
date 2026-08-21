@@ -1,9 +1,22 @@
 const SUPABASE_URL = "https://kgjiviwwwrkwzpmektoh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_inLD9v_USGu93C3-JwZ7CA_mLnNBFUw";
 
+const visitorId =
+    localStorage.getItem("sph_shop_visitor_id") ||
+    crypto.randomUUID();
+
+localStorage.setItem("sph_shop_visitor_id", visitorId);
+
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_KEY
+    SUPABASE_KEY,
+    {
+        global: {
+            headers: {
+                "x-visitor-id": visitorId
+            }
+        }
+    }
 );
 const themeButton = document.getElementById("themeButton");
 const addAdButton = document.getElementById("addAdButton");
@@ -41,7 +54,7 @@ function getVisitorId() {
     return visitorId;
 }
 
-const visitorId = getVisitorId();
+// visitorId در ابتدای فایل ساخته شده است.
 
 console.log("🔥 SPH visitorId:", visitorId);
 
