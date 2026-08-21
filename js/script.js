@@ -1035,3 +1035,11 @@ setInterval(
     checkUnreadMessages,
     5000
 );
+
+console.log("🔥 DEBUG TEST شروع شد");
+
+console.log("itemForm =", document.getElementById("itemForm"));
+console.log("products =", document.getElementById("products"));
+console.log("listingOverlay =", document.getElementById("listingOverlay"));
+console.log("listingDetails =", document.getElementById("listingDetails"));
+
