@@ -261,6 +261,10 @@ if (itemForm) {
     itemForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
+        console.log("🔥 SUBMIT FORM اجرا شد");
+
+        try {
+
         const itemName =
             document.getElementById("itemName").value.trim();
 
@@ -351,6 +355,11 @@ if (itemForm) {
         formOverlay.style.display = "none";
 
         await loadListings();
+
+        } catch (error) {
+            console.error("🔥 خطای کامل ثبت آگهی:", error);
+            alert("❌ خطای واقعی ثبت آگهی:\n" + error.message);
+        }
     });
 }
 
