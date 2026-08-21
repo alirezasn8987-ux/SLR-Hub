@@ -901,31 +901,66 @@ function setMessagesUnreadDot(show) {
 
 async function checkUnreadMessages() {
 
-    if (!messagesButton) return;
+    try {
 
-    const { data, error } =
-        await supabaseClient
-            .from("messages")
-            .select("id,is_read,receiver_username");
+        if (!messagesButton) {
+            return;
+        }
 
-    if (error) {
+        const currentVisitorId =
+            typeof visitorId !== "undefined"
+                ? visitorId
+                : null;
+
+        if (!currentVisitorId) {
+            setMessagesUnreadDot(false);
+            return;
+        }
+
+        /*
+         * فقط پیام‌هایی که واقعاً برای همین کاربر هستند
+         * و هنوز خوانده نشده‌اند بررسی می‌شوند.
+         */
+
+        const { data, error } =
+            await supabaseClient
+                .from("messages")
+                .select("id,is_read,receiver_visitor_id")
+                .eq("receiver_visitor_id", currentVisitorId)
+                .eq("is_read", false)
+                .limit(1);
+
+        if (error) {
+
+            console.error(
+                "❌ خطای بررسی پیام خوانده‌نشده:",
+                error
+            );
+
+            /*
+             * اگر بررسی Supabase با خطا مواجه شد،
+             * نقطه قرمز را الکی نشان نمی‌دهیم.
+             */
+
+            setMessagesUnreadDot(false);
+            return;
+        }
+
+        const hasUnread =
+            Array.isArray(data) &&
+            data.length > 0;
+
+        setMessagesUnreadDot(hasUnread);
+
+    } catch (error) {
 
         console.error(
-            "خطای بررسی پیام‌ها:",
+            "❌ خطای سیستم نقطه قرمز:",
             error
         );
 
-        return;
+        setMessagesUnreadDot(false);
     }
-
-    const unread =
-        (data || []).some(function(message) {
-
-            return message.is_read === false;
-
-        });
-
-    setMessagesUnreadDot(unread);
 }
 
 
