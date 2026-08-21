@@ -315,3 +315,309 @@ body.light-mode .second-button {
 #addAdButton {
     font-size: 32px !important;
 }
+
+/* ================================
+   SPH SHOP — Listing Cards
+================================ */
+
+.product {
+    background: #151b2e;
+    border: 1px solid #293452;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.product h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.product p {
+    margin: 0;
+    color: #9da8c0;
+    line-height: 1.7;
+}
+
+.product strong {
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.product .buy-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: #5865f2;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.product .buy-button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+
+/* تصویر آگهی */
+.product-image {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+}
+
+
+/* ================================
+   SPH SHOP — Listing Details
+================================ */
+
+.listing-details-box {
+    width: min(92%, 600px);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+#listingDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.listing-detail-image {
+    width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+    border-radius: 16px;
+    background: #0b1020;
+}
+
+.listing-detail-title {
+    margin: 0;
+    font-size: 26px;
+}
+
+.listing-detail-description {
+    margin: 0;
+    line-height: 1.8;
+    color: #aeb8cf;
+}
+
+.listing-detail-price {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.listing-detail-seller {
+    font-size: 16px;
+    color: #aeb8cf;
+}
+
+.listing-message-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 13px;
+    background: #5865f2;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.listing-message-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+
+
+/* ========================================
+   نشان پیام خوانده نشده
+   ======================================== */
+
+#messagesButton {
+    position: relative;
+}
+
+.messages-unread-dot {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 11px;
+    height: 11px;
+    background: #ff3040;
+    border-radius: 50%;
+    border: 2px solid #0b1020;
+    display: none;
+    z-index: 999;
+    box-sizing: border-box;
+}
+
+
+
+/* ==========================================
+   SPH SHOP Messenger UI
+   ========================================== */
+
+#messagesOverlay {
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+#messagesOverlay .messages-box {
+    width: min(95vw, 520px);
+    max-height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+#messagesOverlay .messenger-header {
+    flex-shrink: 0;
+    padding-bottom: 10px;
+}
+
+#messagesOverlay .messenger-header h2 {
+    margin: 0;
+}
+
+#messagesOverlay #messagesList {
+    flex: 1;
+    min-height: 0;
+    max-height: calc(85vh - 90px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    padding: 8px 5px 15px;
+    box-sizing: border-box;
+}
+
+/* اسکرول‌بار پیام‌ها */
+
+#messagesOverlay #messagesList::-webkit-scrollbar {
+    width: 6px;
+}
+
+#messagesOverlay #messagesList::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
+
+#messagesOverlay #messagesList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+/* ==========================================
+   کارت گفتگو
+   ========================================== */
+
+.conversation-item {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 9px;
+    border-radius: 16px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: transform .15s ease;
+}
+
+.conversation-item:active {
+    transform: scale(.98);
+}
+
+
+/* ==========================================
+   حباب پیام
+   ========================================== */
+
+.chat-message {
+    max-width: 78%;
+    padding: 10px 13px;
+    margin-bottom: 10px;
+    border-radius: 16px;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+}
+
+.chat-message.mine {
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+}
+
+.chat-message.theirs {
+    margin-right: auto;
+    border-bottom-left-radius: 5px;
+}
+
+.chat-message .chat-name {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.chat-message .chat-time {
+    display: block;
+    font-size: 10px;
+    opacity: .6;
+    margin-top: 5px;
+    text-align: right;
+}
+
+
+/* ==========================================
+   موبایل
+   ========================================== */
+
+@media (max-width: 600px) {
+
+    #messagesOverlay {
+        padding: 10px;
+    }
+
+    #messagesOverlay .messages-box {
+        width: 100%;
+        max-height: 90vh;
+    }
+
+    #messagesOverlay #messagesList {
+        max-height: calc(90vh - 80px);
+    }
+
+    .chat-message {
+        max-width: 85%;
+    }
+}
+
+/* جای دکمه حذف پیام‌های دریافتی */
+#deleteMyMessagesButton {
+    order: -1;
+    margin-top: 0 !important;
+    margin-bottom: 12px !important;
+}
+
+
+#deleteMyMessagesButton {
+    margin-top: 45px !important;
+}
+

@@ -145,6 +145,19 @@
 
 
                 <label>
+                    نام Minecraft فروشنده
+                    <span>*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="sellerMinecraftName"
+                    placeholder="نام شما در Minecraft را وارد کنید"
+                    required
+                >
+
+
+                <label>
                     نوع ارزش
                     <span>*</span>
                 </label>
@@ -226,6 +239,49 @@
             </div>
 
         </div>
+
+    </div>
+
+</div>
+
+<div id="listingOverlay" class="overlay">
+
+    <div class="form-box listing-details-box">
+
+        <button id="closeListing" class="close-button">×</button>
+
+        <div id="listingDetails"></div>
+
+    </div>
+
+</div>
+
+<div id="messageComposeOverlay" class="overlay">
+
+    <div class="form-box">
+
+        <button
+            id="closeMessageCompose"
+            class="close-button"
+            type="button"
+            onclick="document.getElementById('messageComposeOverlay').style.display='none'">
+            ×
+        </button>
+
+        <h2>💬 پیام به فروشنده</h2>
+
+        <textarea
+            id="messageInput"
+            placeholder="پیامتان را بنویسید..."
+            rows="6"
+        ></textarea>
+
+        <button
+            id="sendMessageButton"
+            class="listing-message-button"
+        >
+            ارسال پیام
+        </button>
 
     </div>
 
