@@ -286,12 +286,21 @@ async function loadListings() {
                         deleteButton.disabled = true;
                         deleteButton.textContent = "در حال حذف...";
 
-                        const { error: deleteError } =
-                            await supabaseClient
-                                .from("listings")
-                                .delete()
-                                .eq("id", item.id)
-                                .eq("owner_id", visitorId);
+                        const { data: deleteResult, error: deleteError } =
+                            await supabaseClient.rpc(
+                                "delete_my_listing",
+                                {
+                                    listing_id: item.id,
+                                    visitor_id: visitorId
+                                }
+                            );
+
+                        if (!deleteError && deleteResult !== true) {
+                            alert("❌ این آگهی متعلق به شما نیست یا قبلاً حذف شده.");
+                            deleteButton.disabled = false;
+                            deleteButton.textContent = "🗑 حذف این آگهی";
+                            return;
+                        }
 
                         if (deleteError) {
                             console.error(
