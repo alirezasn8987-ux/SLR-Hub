@@ -267,20 +267,59 @@ if (itemForm) {
 
         try {
 
+        console.log("========== 🔥 AD FORM ELEMENT CHECK ==========");
+
+        const itemNameEl =
+            document.getElementById("itemName");
+
+        const itemDescriptionEl =
+            document.getElementById("itemDescription");
+
+        const sellerMinecraftNameEl =
+            document.getElementById("sellerMinecraftName");
+
+        const valueTypeEl =
+            document.getElementById("valueType");
+
+        const itemPriceEl =
+            document.getElementById("itemPrice");
+
+        console.log("itemName:", itemNameEl);
+        console.log("itemDescription:", itemDescriptionEl);
+        console.log("sellerMinecraftName:", sellerMinecraftNameEl);
+        console.log("valueType:", valueTypeEl);
+        console.log("itemPrice:", itemPriceEl);
+
+        if (!itemNameEl ||
+            !itemDescriptionEl ||
+            !sellerMinecraftNameEl ||
+            !valueTypeEl ||
+            !itemPriceEl) {
+
+            console.error("❌ حداقل یکی از المنت‌های فرم پیدا نشد.");
+
+            alert(
+                "خطای فرم: یکی از فیلدهای ثبت آگهی در HTML پیدا نشد.\n\n" +
+                "Console را بررسی کنید."
+            );
+
+            return;
+        }
+
         const itemName =
-            document.getElementById("itemName").value.trim();
+            itemNameEl.value.trim();
 
         const itemDescription =
-            document.getElementById("itemDescription").value.trim();
+            itemDescriptionEl.value.trim();
 
         const sellerMinecraftName =
-            document.getElementById("sellerMinecraftName").value.trim();
+            sellerMinecraftNameEl.value.trim();
 
         const valueType =
-            document.getElementById("valueType").value;
+            valueTypeEl.value;
 
         const itemPrice =
-            document.getElementById("itemPrice").value;
+            itemPriceEl.value;
 
         const itemImageInput =
             document.getElementById("itemImage");
