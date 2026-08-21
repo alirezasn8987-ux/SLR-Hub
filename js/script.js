@@ -41,7 +41,9 @@ function getVisitorId() {
     return visitorId;
 }
 
-const visitorId = "a05e9728-e918-4e14-89d4-d5b11bbe7ecd";
+const visitorId = getVisitorId();
+
+console.log("🔥 SPH visitorId:", visitorId);
 
 if (themeButton) {
     themeButton.addEventListener("click", function () {
@@ -1042,4 +1044,48 @@ console.log("itemForm =", document.getElementById("itemForm"));
 console.log("products =", document.getElementById("products"));
 console.log("listingOverlay =", document.getElementById("listingOverlay"));
 console.log("listingDetails =", document.getElementById("listingDetails"));
+
+
+/* ========================================
+   SPH SHOP AUTO FIX
+   SAFE LISTING + VIEW DEBUG
+======================================== */
+
+(function () {
+
+    console.log("🔥 SPH SHOP AUTO FIX فعال شد");
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const form = document.getElementById("itemForm");
+        const products = document.getElementById("products");
+        const listingOverlay =
+            document.getElementById("listingOverlay");
+        const listingDetails =
+            document.getElementById("listingDetails");
+
+        console.log("FORM:", form);
+        console.log("PRODUCTS:", products);
+        console.log("LISTING OVERLAY:", listingOverlay);
+        console.log("LISTING DETAILS:", listingDetails);
+
+        if (!form) {
+            console.error("❌ itemForm پیدا نشد");
+        }
+
+        if (!products) {
+            console.error("❌ products پیدا نشد");
+        }
+
+        if (!listingOverlay) {
+            console.error("❌ listingOverlay پیدا نشد");
+        }
+
+        if (!listingDetails) {
+            console.error("❌ listingDetails پیدا نشد");
+        }
+
+    });
+
+})();
 
